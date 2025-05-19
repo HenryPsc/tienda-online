@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contacto - Tienda Principal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=">
+  </script>
+  <script type="module"
+    src="https://unpkg.com/@googlemaps/extended-component-library@latest">
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    gmp-map {
+      height: 100%;
+      width: 100%;
+      display: block;
+      border-radius: 0.5rem;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen flex flex-col items-center p-4">
+
+  <h1 class="text-3xl font-bold text-blue-700 mb-8 text-center">Contacto - Tienda Principal</h1>
+
+  <!-- Contenedor principal -->
+  <div class="w-full max-w-7xl bg-white rounded-lg shadow-lg p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[60vh]">
+
+    <!-- Información -->
+    <div class="flex flex-col justify-center space-y-4 text-lg">
+      <h2 class="text-2xl font-semibold text-gray-800">Henry Simbaña</h2>
+      <p><strong class="text-gray-800">Teléfono:</strong> 0980323814</p>
+      <p><strong class="text-gray-800">Correo:</strong> <a href="mailto:henry.psc22@gmail.com" class="text-blue-600 hover:underline">henry.psc22@gmail.com</a></p>
+      <p><strong class="text-gray-800">Ubicación:</strong> Sector Pintag - Tolontag</p>
+    </div>
+
+    <!-- Mapa -->
+    <div class="min-h-[300px] md:min-h-[400px] h-full">
+      <gmp-map center="-0.328475,-78.424920" zoom="16" map-id="demo-maps">
+        <gmp-advanced-marker
+          position="-0.328475,-78.424920"
+          title="Tienda Principal - Tolontag">
+        </gmp-advanced-marker>
+      </gmp-map>
+    </div>
+  </div>
+
+  <!-- Botón de regreso -->
+  <a href="index.html" class="mt-6 inline-block bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">
+    Volver a Inicio
+  </a>
+
+</body>
+</html>
