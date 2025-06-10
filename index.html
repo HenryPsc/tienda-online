@@ -18,6 +18,21 @@
     <button id="cerrarSesion" class="text-blue-600 hover:underline">Cerrar sesión</button>
   </nav>
   
+  <script>
+        if (!localStorage.getItem('token')) {
+            window.location.href = 'inicio.html';
+        }
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        if (user.rol === 'admin') {
+            document.getElementById('adminNav').style.display = '';
+        }
+        document.getElementById('cerrarSesion').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.clear();
+            window.location.href = 'inicio.html';
+        });
+    </script>
+
   <div class="my-4 px-4">
     <input
       id="busqueda"

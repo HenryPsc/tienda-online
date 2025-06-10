@@ -4,7 +4,9 @@ const contenedorCategorias = document.getElementById("categorias");
 
 let Aproductos = [];
 let categoriaSeleccionada = "all";
+let categoriasMap = {};
 
+/*
 async function cargarProductos() {
   try {
     mostrarMensaje("Cargando productos...");
@@ -35,6 +37,42 @@ async function cargarCategorias() {
     mostrarCategorias(["all", ...categorias]);
   } catch (error) {
     console.error("Error al cargar las categorías:", error);
+  }
+}
+*/
+
+async function cargarProductos() {
+  try {
+    mostrarMensaje("Cargando productos...");
+    const respuesta = await fetch("http://127.0.0.1:8000/api/productos");
+
+    if (!respuesta.ok) throw new Error("Error en la respuesta de la API");
+
+    const productos = await respuesta.json();
+    Aproductos = productos;
+
+    if (productos.length === 0) {
+      mostrarMensaje("No hay productos disponibles");
+    } else {
+      mostrarProductos(productos);
+    }
+  } catch (error) {
+    console.error("Error al cargar los productos:", error);
+    mostrarMensaje("Error al cargar los productos");
+  }
+}
+
+async function cargarCategorias() {
+  try {
+    const respuesta = await fetch("http://127.0.0.1:8000/api/categorias");
+
+    if (!respuesta.ok) throw new Error("Error en la respuesta de la API");
+
+    const categorias = await respuesta.json();
+    mostrarCategorias(["all", ...categorias]);
+  } catch (error) {
+    console.error("Error al cargar las categorías:", error);
+    mostrarMensaje("Error al cargar las categorías");
   }
 }
 
