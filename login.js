@@ -1,35 +1,76 @@
-const formLogin = document.getElementById("formLogin");
-const inputUsuario = document.getElementById("username");
-const inputClave = document.getElementById("password");
-const errorMensaje = document.getElementById("errorMensaje");
+console.log("¡login.js ha sido cargado y está ejecutándose!");
+document.addEventListener("DOMContentLoaded", () => {
+  // Obtener elementos del DOM
+  const form = document.getElementById("form-login");
+  const mensajeError = document.getElementById("mensaje-error");
+  const mirarCatalogoBtn = document.getElementById("mirar-catalogo-btn"); // Nuevo botón
 
-formLogin.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  errorMensaje.textContent = "";
+  // Verifica si se encontró el botón
+  if (!mirarCatalogoBtn) {
+    console.error("No se encontró el botón 'Mirar Catálogo'");
+    return;
+  }
 
-  const datos = {
-    username: inputUsuario.value,
-    password: inputClave.value
-  };
+  // --- Event Listeners ---
 
-  try {
-    const respuesta = await fetch("https://fakestoreapi.com/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(datos)
-    });
+  // Event listener para el formulario de login
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-    if (!respuesta.ok) throw new Error("Credenciales incorrectas");
+    mensajeError.classList.add("hidden");
+    mensajeError.textContent = "";
 
-    const resultado = await respuesta.json();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-    localStorage.setItem("token", resultado.token);
+    if (!email || !password) {
+      mostrarError("Por favor, completa ambos campos.");
+      return;
+    }
 
+    try {
+      const respuesta = await fetch("http://127.0.0.1:8000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await respuesta.json();
+
+      if (!respuesta.ok) {
+        throw new Error(data.message || "Credenciales inválidas");
+      }
+
+      localStorage.setItem("token", data.access_token);
+      localStorage.setItem("logueado", "true");
+      localStorage.setItem("usuario", JSON.stringify({
+        id: data.user.id,
+        name: data.user.name,
+        email: data.user.email,
+        rol: data.user.rol
+      }));
+
+      redirigirSegunRol(data.user.rol);
+
+    } catch (error) {
+      mostrarError(error.message);
+      console.error("Error en login:", error);
+    }
+  });
+
+  mirarCatalogoBtn.addEventListener("click", () => {
     window.location.href = "index.html";
+  });
 
-  } catch (error) {
-    errorMensaje.textContent = error.message;
+  function mostrarError(mensaje) {
+    mensajeError.textContent = mensaje;
+    mensajeError.classList.remove("hidden");
+  }
+
+  function redirigirSegunRol(rol) {
+    window.location.href = "index.html";
   }
 });

@@ -4,37 +4,36 @@ una aplicacion web que fue desarrollada dentro de Visual Code con los tipos de a
 
 ## Características
 
-- **Autenticación:** Inicio y cierre de sesión con validación y almacenamiento de token.
-- **Catálogo de productos:** Visualización, búsqueda y filtrado por categorías.
-- **Detalles de producto:** Página individual con información y categorías asociadas.
-- **Gestión de categorías:** Filtrado dinámico usando datos de una API propia.
-- **Imágenes en Firebase Storage:** Recuperación y visualización segura de imágenes.
-- **Google Maps:** Mapa con marcador de la tienda en la página de contacto.
-- **Protección de rutas:** Redirección automática si el usuario no está autenticado.
-- **Estilos modernos:** Interfaz responsiva con Tailwind CSS.
+    - Autenticación: Inicio y cierre de sesión con validación y almacenamiento de token.
+    - Catálogo de productos: Visualización, búsqueda y filtrado por categorías.
+    - Detalles de producto: Página individual con información y categorías asociadas.
+    - Gestión de categorías: Filtrado dinámico usando datos de una API propia.
+    - Imágenes en Firebase Storage: Recuperación y visualización segura de imágenes.
+    - Google Maps: Mapa con marcador de la tienda en la página de contacto.
+    - Protección de rutas: Redirección automática si el usuario no está autenticado.
+    - Estilos modernos: Interfaz responsiva con Tailwind CSS.
 
-## Tecnologías utilizadas
+## Se usa Firebase únicamente para almacenar imágenes.
 
-- **Frontend:** HTML5, JavaScript, Tailwind CSS
-- **Backend/API:** Laravel (o cualquier API REST propia)
-- **Autenticación:** LocalStorage y validación con API
-- **Almacenamiento de imágenes:** Firebase Storage
-- **Google Maps API:** Para mostrar la ubicación de la tienda
+const firebaseConfig = {
+  apiKey: "TU_API_KEY",
+  authDomain: "TU_DOMINIO.firebaseapp.com",
+  projectId: "TU_PROYECTO_ID",
+  storageBucket: "TU_BUCKET.appspot.com",
+  messagingSenderId: "ID",
+  appId: "APP_ID"
+};
 
-## Estructura del proyecto
+## instalacion de composer
+    la cual se utilizo el comando
+    - composer install
 
-```
-├── app.js                # Lógica principal del catálogo y filtrado
-├── appdetalles.js        # Lógica de la página de detalles de producto
-├── contacto.html         # Página de contacto con Google Maps
-├── detalles.html         # Página de detalles de producto
-├── firebase-conf.js      # Configuración de Firebase (no usado en frontend, solo referencia)
-├── index.html            # Página principal
-├── login.html            # Página de inicio de sesión
-├── package.json          # Dependencias (solo para referencia)
-└── firebase-storage/
-    ├── cors.json         # Configuración CORS para Firebase Storage
-    ├── firebase.json     # Configuración de reglas de Firebase
-    └── storage.rules     # Reglas de seguridad de Firebase Storage
-```
+# vincular con la base de datos.
+    en el archivo .env se encuentra un apartado donde podemos realizar la configuracion para que se conecte con la base de datos.
 
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=laravel
+    DB_USERNAME=root
+    DB_PASSWORD=

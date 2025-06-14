@@ -1,64 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tienda</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tienda Online</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    if (localStorage.getItem("logueado") !== "true") {
+      window.location.href = "login.html";
+    }
+  </script>
 </head>
+<body class="bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen flex flex-col">
 
-<body class="flex flex-col min-h-screen bg-gray-50">
-  <header class="bg-white shadow p-4 mb-4">
-    <h1 class="text-3xl font-bold text-center">Tienda Online</h1>
+  <!-- HEADER con gradiente y sombra -->
+  <header class="bg-gradient-to-r from-blue-600 to-blue-400 shadow-lg p-6 flex flex-col items-center rounded-b-3xl">
+    <h1 class="text-4xl font-extrabold text-white text-center mb-4 drop-shadow-lg tracking-wide">
+      Tienda Online
+    </h1>
+    <nav class="hidden md:flex flex-wrap justify-center gap-4 text-sm">
+      <a href="#" id="inicio-link" class="hover:text-blue-100 px-4 py-2 rounded font-semibold bg-blue-500 hover:bg-blue-700 shadow transition">Inicio</a>
+      <a href="#" id="productos-link" class="hover:text-blue-100 px-4 py-2 rounded font-semibold bg-blue-500 hover:bg-blue-700 shadow transition">Productos</a>
+      <a href="#" id="contacto-link" class="hover:text-blue-100 px-4 py-2 rounded font-semibold bg-blue-500 hover:bg-blue-700 shadow transition">Contactos</a>
+      <a href="#" id="admin-link" class="hover:text-blue-100 px-4 py-2 rounded font-semibold bg-blue-500 hover:bg-blue-700 shadow transition">Admin</a>
+      <a href="#" id="logout-link" class="hover:text-red-200 px-4 py-2 rounded font-semibold bg-red-500 hover:bg-red-700 shadow transition">Logout</a>
+    </nav>
+    <button id="menu-btn" class="md:hidden text-3xl mt-2 focus:outline-none text-white">
+      &#9776;
+    </button>
   </header>
 
-  <nav class="flex justify-end space-x-4 px-6 mb-4">
-    <button class="text-blue-600 hover:underline">Inicio</button>
-    <button id="contacto" class="text-blue-600 hover:underline">Contacto</button>
-    <button id="cerrarSesion" class="text-blue-600 hover:underline">Cerrar sesión</button>
-  </nav>
-  
-  <script>
-        if (!localStorage.getItem('token')) {
-            window.location.href = 'inicio.html';
-        }
-        const user = JSON.parse(localStorage.getItem('user') || '{}');
-        if (user.rol === 'admin') {
-            document.getElementById('adminNav').style.display = '';
-        }
-        document.getElementById('cerrarSesion').addEventListener('click', function(e) {
-            e.preventDefault();
-            localStorage.clear();
-            window.location.href = 'inicio.html';
-        });
-    </script>
-
-  <div class="my-4 px-4">
-    <input
-      id="busqueda"
-      type="text"
-      placeholder="Buscar productos..."
-      class="py-2 px-4 border border-gray-300 rounded mb-4 w-full sm:w-1/2 lg:w-1/3 mx-auto block"
-    />
-
-    <div id="categorias" class="flex flex-wrap gap-3 justify-center">
-    </div>
+  <!-- Menú móvil -->
+  <div id="mobile-menu" class="hidden md:hidden flex-col items-center bg-white shadow-md p-4 space-y-2 text-sm rounded-b-2xl">
+    <a href="#" class="hover:text-blue-600">Inicio</a>
+    <a href="#" class="hover:text-blue-600">Productos</a>
+    <a href="#" class="hover:text-blue-600">Contactos</a>
+    <a href="#" class="hover:text-blue-600">Admin</a>
+    <a href="#" class="hover:text-red-600">Cerrar sesión</a>
   </div>
 
-  <section class="text-center my-6">
-    <h2 class="text-2xl font-bold mb-2">Catálogo de productos</h2>
-    <p class="text-gray-600">Explora nuestra sección de productos</p>
-  </section>
-
-  <main class="px-6 pb-10">
-    <div id="productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    </div>
+  <!-- CONTENIDO -->
+  <main class="flex-1 text-center mt-10">
+    <h2 class="text-3xl font-bold text-blue-700">Catálogo de Productos</h2>
+    <p class="mt-2 text-gray-600">Tus compras ahora en línea.</p>
   </main>
 
-  <footer class="bg-white border-t py-6 mt-auto text-center text-gray-400">
-    &copy; 2025 Tienda Online
+  <section class="max-w-7xl mx-auto px-6 my-10">
+    <div class="flex flex-col items-center gap-4">
+      <!-- Campo de búsqueda con icono -->
+      <div class="relative w-full max-w-md">
+        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-400">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </span>
+        <input
+          id="busqueda"
+          type="text"
+          placeholder="Buscar productos..."
+          class="w-full pl-10 pr-4 py-2 border-2 border-blue-400 rounded-md focus:outline-none focus:border-blue-600 shadow"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORÍAS -->
+  <section class="max-w-7xl mx-auto px-6 mb-6">
+    <div id="categorias" class="flex flex-wrap gap-4 justify-center"></div>
+  </section>
+
+  <!-- PRODUCTOS -->
+  <section class="max-w-7xl mx-auto px-6 pb-16">
+    <div id="productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8"></div>
+  </section>
+
+  <footer class="text-center mt-auto py-4 text-sm text-white bg-gradient-to-r from-blue-600 to-blue-400 shadow-inner rounded-t-2xl">
+    © 2025, Productos Online
   </footer>
 
+  <script>
+    document.getElementById("menu-btn").addEventListener("click", function () {
+      const menu = document.getElementById("mobile-menu");
+      menu.classList.toggle("hidden");
+    });
+  </script>
   <script src="app.js"></script>
+
+  <!-- Firebase App (core) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <!-- Firebase Storage -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <!-- Configuración separada -->
+  <script src="firebase-config.js"></script>
+  <script>
+      firebase.initializeApp(firebaseConfig);
+  </script>
 </body>
 </html>
