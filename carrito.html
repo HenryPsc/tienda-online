@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tu Carrito de Compras</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .cart-item-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr 1fr 1fr 0.5fr;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem 0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .cart-item-grid:last-child {
+      border-bottom: none;
+    }
+    @media (max-width: 768px) {
+      .cart-item-grid {
+        grid-template-columns: 1fr 3fr;
+        grid-template-areas:
+          "image details"
+          "quantity-price delete";
+      }
+      .cart-item-grid .item-image { grid-area: image; }
+      .cart-item-grid .item-details { grid-area: details; }
+      .cart-item-grid .item-quantity { grid-area: quantity-price; display: flex; align-items: center; gap: 0.5rem;}
+      .cart-item-grid .item-price { grid-area: quantity-price; justify-self: end; }
+      .cart-item-grid .item-delete { grid-area: delete; justify-self: end; }
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col font-sans text-gray-800">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow p-5 flex justify-between items-center sticky top-0 z-10">
+    <h1 class="text-2xl font-bold text-blue-700">
+      <span>Tienda</span><br>
+      <span class="text-blue-500">Online</span>
+    </h1>
+    <nav class="flex flex-wrap gap-3 text-sm">
+      <a href="index.html" class="px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold rounded shadow">Volver al Catálogo</a>
+      <a href="admin.html" class="nav-admin-link hidden px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded shadow">Admin</a>
+      <a href="#" class="nav-logout-link hidden px-4 py-2 bg-red-100 hover:bg-red-200 text-red-600 font-semibold rounded shadow">Logout</a>
+      <a href="mis_direcciones.html" class="nav-mis-direcciones-link hidden px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold rounded shadow">Mis Direcciones</a>
+      <a href="mis_pedidos.html" class="nav-mis-pedidos-link hidden px-4 py-2 bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold rounded shadow">Mis Pedidos</a>
+    </nav>
+  </header>
+
+  <main class="flex-grow container mx-auto px-4 py-10">
+    <h2 class="text-4xl font-bold text-center mb-10 text-gray-900">Tu Carrito de Compras</h2>
+
+    <div class="bg-white shadow-xl rounded-lg p-6">
+      <!-- Encabezado del carrito -->
+      <div class="hidden md:grid cart-item-grid font-semibold text-gray-600 border-b pb-2">
+        <div class="item-image"></div>
+        <div class="item-details">Producto</div>
+        <div class="item-quantity text-center">Cantidad</div>
+        <div class="item-price text-right">Subtotal</div>
+        <div class="item-delete text-center"></div>
+      </div>
+
+      <!-- Contenido del carrito -->
+      <div id="cart-items-container" class="py-6 text-center text-gray-500">
+        Cargando carrito...
+      </div>
+
+      <!-- Resumen -->
+      <div class="border-t pt-6 mt-6 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="text-2xl font-bold">
+          Total: <span id="cart-total" class="text-blue-600">$0.00</span>
+        </div>
+        <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+          <button id="clear-cart-btn" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg shadow-md transition duration-200">
+            Vaciar Carrito
+          </button>
+          <button id="checkout-btn" class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-md transition duration-200">
+            Proceder al Pago
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white shadow-inner mt-12 py-4 text-center text-sm text-gray-500">
+    © 2025, Productos Online
+  </footer>
+
+  <script src="carrito.js"></script>
+</body>
+</html>

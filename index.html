@@ -6,95 +6,78 @@
   <title>Tienda Online</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    // Para acceso público (descomenta si quieres proteger con login)
+    /*
     if (localStorage.getItem("logueado") !== "true") {
       window.location.href = "login.html";
     }
+    */
   </script>
 </head>
-<body class="bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen flex flex-col">
+<body class="bg-gray-100 text-gray-800 font-sans">
 
-  <!-- HEADER con gradiente y sombra -->
-  <header class="bg-gradient-to-r from-blue-600 to-blue-400 shadow-lg p-6 flex flex-col items-center rounded-b-3xl">
-    <h1 class="text-4xl font-extrabold text-white text-center mb-4 drop-shadow-lg tracking-wide">
-      Tienda Online
-    </h1>
-    <nav class="hidden md:flex flex-wrap justify-center gap-4 text-sm">
-      <a href="#" id="inicio-link" class="hover:text-blue-100 px-4 py-2 rounded font-semibold bg-blue-500 hover:bg-blue-700 shadow transition">Inicio</a>
-      <a href="#" id="productos-link" class="hover:text-blue-100 px-4 py-2 rounded font-semibold bg-blue-500 hover:bg-blue-700 shadow transition">Productos</a>
-      <a href="#" id="contacto-link" class="hover:text-blue-100 px-4 py-2 rounded font-semibold bg-blue-500 hover:bg-blue-700 shadow transition">Contactos</a>
-      <a href="#" id="admin-link" class="hover:text-blue-100 px-4 py-2 rounded font-semibold bg-blue-500 hover:bg-blue-700 shadow transition">Admin</a>
-      <a href="#" id="logout-link" class="hover:text-red-200 px-4 py-2 rounded font-semibold bg-red-500 hover:bg-red-700 shadow transition">Logout</a>
+  <!-- NAVBAR CENTRADO -->
+  <header class="bg-white shadow-md px-6 py-6 flex flex-col items-center text-center">
+    <h1 class="text-3xl font-bold text-blue-600 mb-4">Tienda Online</h1>
+
+    <!-- Botón hamburguesa en móvil -->
+    <button id="menu-toggle" class="md:hidden text-3xl mb-4">&#9776;</button>
+
+    <!-- Menú -->
+    <nav id="menu" class="hidden md:flex flex-wrap justify-center gap-4 text-sm font-semibold">
+      <a href="#" class="hover:text-blue-600">Inicio</a>
+      <a href="#" class="hover:text-blue-600">Productos</a>
+      <a href="#" class="hover:text-blue-600">Contactos</a>
+      <a href="carrito.html" class="hover:text-blue-600">Carrito</a>
+      <a href="mis_direcciones.html" class="hidden nav-mis-direcciones-link hover:text-blue-600">Mis Direcciones</a>
+      <a href="mis_pedidos.html" class="hidden nav-mis-pedidos-link hover:text-blue-600">Mis Pedidos</a>
+      <a href="admin.html" class="hidden nav-admin-link hover:text-blue-600">Admin</a>
+      <a href="#" class="hidden nav-logout-link text-red-600 hover:text-red-800">Cerrar sesión</a>
     </nav>
-    <button id="menu-btn" class="md:hidden text-3xl mt-2 focus:outline-none text-white">
-      &#9776;
-    </button>
   </header>
 
-  <!-- Menú móvil -->
-  <div id="mobile-menu" class="hidden md:hidden flex-col items-center bg-white shadow-md p-4 space-y-2 text-sm rounded-b-2xl">
+  <!-- MENÚ MÓVIL CENTRADO -->
+  <div id="mobile-menu" class="md:hidden hidden flex-col items-center bg-white px-6 py-4 space-y-2 text-sm font-semibold">
     <a href="#" class="hover:text-blue-600">Inicio</a>
     <a href="#" class="hover:text-blue-600">Productos</a>
     <a href="#" class="hover:text-blue-600">Contactos</a>
-    <a href="#" class="hover:text-blue-600">Admin</a>
-    <a href="#" class="hover:text-red-600">Cerrar sesión</a>
+    <a href="carrito.html" class="hover:text-blue-600">Carrito</a>
+    <a href="mis_direcciones.html" class="hidden nav-mis-direcciones-link hover:text-blue-600">Mis Direcciones</a>
+    <a href="mis_pedidos.html" class="hidden nav-mis-pedidos-link hover:text-blue-600">Mis Pedidos</a>
+    <a href="admin.html" class="hidden nav-admin-link hover:text-blue-600">Admin</a>
+    <a href="#" class="hidden nav-logout-link text-red-600 hover:text-red-800">Logout</a>
   </div>
 
   <!-- CONTENIDO -->
-  <main class="flex-1 text-center mt-10">
-    <h2 class="text-3xl font-bold text-blue-700">Catálogo de Productos</h2>
-    <p class="mt-2 text-gray-600">Tus compras ahora en línea.</p>
+  <main class="max-w-6xl mx-auto px-6 mt-8">
+    <h2 class="text-2xl font-bold text-center mb-2">Catálogo de Productos</h2>
+    <p class="text-center text-gray-600 mb-6">Tus compras ahora en línea.</p>
+
+    <!-- BUSCADOR -->
+    <div class="flex justify-center mb-4">
+      <input id="busqueda" type="text" placeholder="Buscar productos..."
+        class="w-full max-w-md px-4 py-2 border border-blue-400 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+    </div>
+
+    <!-- CATEGORÍAS -->
+    <div id="categorias" class="flex flex-wrap gap-3 justify-center mb-6"></div>
+
+    <!-- PRODUCTOS -->
+    <div id="productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
   </main>
 
-  <section class="max-w-7xl mx-auto px-6 my-10">
-    <div class="flex flex-col items-center gap-4">
-      <!-- Campo de búsqueda con icono -->
-      <div class="relative w-full max-w-md">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-blue-400">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-        </span>
-        <input
-          id="busqueda"
-          type="text"
-          placeholder="Buscar productos..."
-          class="w-full pl-10 pr-4 py-2 border-2 border-blue-400 rounded-md focus:outline-none focus:border-blue-600 shadow"
-        />
-      </div>
-    </div>
-  </section>
-
-  <!-- CATEGORÍAS -->
-  <section class="max-w-7xl mx-auto px-6 mb-6">
-    <div id="categorias" class="flex flex-wrap gap-4 justify-center"></div>
-  </section>
-
-  <!-- PRODUCTOS -->
-  <section class="max-w-7xl mx-auto px-6 pb-16">
-    <div id="productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 mt-8"></div>
-  </section>
-
-  <footer class="text-center mt-auto py-4 text-sm text-white bg-gradient-to-r from-blue-600 to-blue-400 shadow-inner rounded-t-2xl">
+  <!-- FOOTER -->
+  <footer class="text-center text-sm text-gray-500 py-6">
     © 2025, Productos Online
   </footer>
 
+  <!-- Scripts -->
   <script>
-    document.getElementById("menu-btn").addEventListener("click", function () {
-      const menu = document.getElementById("mobile-menu");
-      menu.classList.toggle("hidden");
+    // Toggle del menú móvil
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
     });
   </script>
   <script src="app.js"></script>
-
-  <!-- Firebase App (core) -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <!-- Firebase Storage -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
-  <!-- Configuración separada -->
-  <script src="firebase-config.js"></script>
-  <script>
-      firebase.initializeApp(firebaseConfig);
-  </script>
 </body>
 </html>
